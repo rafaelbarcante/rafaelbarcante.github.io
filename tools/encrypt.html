@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Project page builder</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool { width: min(720px, 100% - 40px); margin: 40px auto 80px; }
+    .tool h1 { font-size: 1.8rem; font-weight: 800; }
+    .tool > p { color: var(--ink-soft); }
+    .panel { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px; margin-top: 20px; display: grid; gap: 18px; }
+    label { font-weight: 700; font-size: .92rem; display: grid; gap: 6px; }
+    label small { font-weight: 500; color: var(--ink-soft); }
+    input[type=text], input[type=password], input[type=file] {
+      font: 500 .95rem var(--font); padding: 10px 14px; border-radius: 12px; border: 2px solid var(--line); background: var(--bg); width: 100%;
+    }
+    .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .row label { flex: 1; min-width: 200px; }
+    .check { display: flex; gap: 10px; align-items: center; font-weight: 700; }
+    .check input { width: 20px; height: 20px; accent-color: #1d1d1f; }
+    #status { font-weight: 600; font-size: .92rem; min-height: 1.4em; }
+    #status.err { color: #b3261e; } #status.ok { color: #1b6e3a; }
+    .note { background: #fff8c9; border-radius: 12px; padding: 12px 16px; font-size: .88rem; }
+    button.btn { justify-self: start; }
+  </style>
+</head>
+<body>
+<main class="tool">
+  <h1>Project page builder</h1>
+  <p>Turns a project content file into a finished page for the <code>projects/</code> folder, either open or password-locked. Everything runs in your browser; nothing is uploaded and the password is never stored.</p>
+
+  <div class="panel">
+    <label>1. Content file <small>from <code>private-src/</code>, e.g. <code>project-2.content.html</code></small>
+      <input type="file" id="f-content" accept=".html,.htm">
+    </label>
+
+    <div class="row">
+      <label>2. Project title <small>shown in the browser tab (and on the lock screen if locked)</small>
+        <input type="text" id="f-title" placeholder="Project Title 2">
+      </label>
+      <label>Output file name
+        <input type="text" id="f-out" placeholder="project-2.html">
+      </label>
+    </div>
+
+    <label class="check"><input type="checkbox" id="f-lock" checked> Lock with a password</label>
+
+    <div id="lock-fields" class="row">
+      <label>Password <small>use a long passphrase (4+ random words)</small>
+        <input type="password" id="f-pw" autocomplete="new-password">
+      </label>
+      <label>Repeat password
+        <input type="password" id="f-pw2" autocomplete="new-password">
+      </label>
+    </div>
+
+    <label id="imgs-wrap">3. Images to embed <small>locked pages only. Select every image used in the content (banner, diagrams, screenshots) so they are encrypted too. Images not selected stay public files. Compress them first (≈150–300 KB each).</small>
+      <input type="file" id="f-imgs" accept="image/*" multiple>
+    </label>
+
+    <div class="note" id="note-open" hidden>Open page: images and videos load from the <code>assets</code> folder as normal. Anyone with the link can read it.</div>
+
+    <button class="btn btn--primary" id="go" type="button">Build page</button>
+    <div id="status" role="status"></div>
+  </div>
+
+  <p style="margin-top:24px;font-size:.88rem;color:var(--ink-soft)">After downloading, move the file into the <code>projects/</code> folder (replacing the old one). Locked pages are safe to publish; keep the content files in <code>private-src/</code> private.</p>
+</main>
+
+<script>
+const ITER = 600000;
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/* ---------- Shell: the page around the content ---------- */
+const LOCK_ICON = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>';
+
+function buildPage({ title, locked, content, payload }) {
+  const t = esc(title);
+  const body = locked
+    ? `<section class="lock" id="lock">
+      <div class="lock__card">
+        <div class="lock__icon">${LOCK_ICON}</div>
+        <h1>${t}</h1>
+        <p>This project is password protected.</p>
+        <form id="lock-form">
+          <label class="sr-only" for="lock-pw">Password</label>
+          <input id="lock-pw" type="password" autocomplete="current-password" placeholder="Password" required>
+          <button class="btn btn--primary" type="submit">Unlock</button>
+        </form>
+        <p class="lock__error" id="lock-error" role="alert" hidden></p>
+        <p class="lock__hint">Don't have the password? <a href="mailto:rafael.barcante@gmail.com">Get in touch</a> and I'll send it over.</p>
+      </div>
+    </section>
+    <div id="content" hidden></div>
+    <script type="application/json" id="payload">${JSON.stringify(payload)}<\/script>`
+    : `<div id="content">
+${content}
+    </div>`;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${t} — Rafael Barçante</title>
+  ${locked ? '<meta name="robots" content="noindex">\n  ' : ''}<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/project.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <a class="brand" href="../index.html">Rafael Barçante - Game Design Portfolio</a>
+      <nav class="nav" aria-label="Main">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="proj-main">
+    <div class="wrap">
+      <a class="back" href="../index.html#projects">← All projects</a>
+${body}
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__copy" style="margin-top:0">© <span id="year"></span> Rafael Barçante</div>
+  </footer>
+
+  <script src="../js/project.js"><\/script>
+${locked ? '  <script src="../js/unlock.js"><\/script>\n' : ''}</body>
+</html>
+`;
+}
+
+/* ---------- Crypto ---------- */
+function toB64(bytes) {
+  let s = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(s);
+}
+async function encrypt(plaintext, password) {
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const km = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey({ name: "PBKDF2", salt, iterations: ITER, hash: "SHA-256" }, km, { name: "AES-GCM", length: 256 }, false, ["encrypt"]);
+  const data = new Uint8Array(await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, new TextEncoder().encode(plaintext)));
+  return { v: 1, iter: ITER, salt: toB64(salt), iv: toB64(iv), data: toB64(data) };
+}
+
+/* ---------- Images → data URIs ---------- */
+function readDataURL(file) {
+  return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); });
+}
+async function embedImages(html, files) {
+  const map = new Map();
+  for (const f of files) map.set(f.name.toLowerCase(), await readDataURL(f));
+  const tpl = document.createElement("template");
+  tpl.innerHTML = html;
+  const missing = [];
+  tpl.content.querySelectorAll("img[src]").forEach(img => {
+    const src = img.getAttribute("src");
+    if (src.startsWith("data:")) return;
+    const name = decodeURIComponent(src.split("/").pop().split("?")[0]).toLowerCase();
+    if (map.has(name)) img.setAttribute("src", map.get(name));
+    else missing.push(src);
+  });
+  return { html: tpl.innerHTML, missing };
+}
+
+/* ---------- UI ---------- */
+function status(msg, cls) { const s = $("status"); s.textContent = msg; s.className = cls || ""; }
+
+function syncUI() {
+  const locked = $("f-lock").checked;
+  $("lock-fields").hidden = !locked;
+  $("imgs-wrap").hidden = !locked;
+  $("note-open").hidden = locked;
+}
+$("f-lock").addEventListener("change", syncUI);
+syncUI();
+
+$("f-content").addEventListener("change", async () => {
+  const f = $("f-content").files[0];
+  if (!f) return;
+  const base = f.name.replace(/\.content\.html?$/i, "").replace(/\.html?$/i, "");
+  $("f-out").value = base + ".html";
+  const text = await f.text();
+  const m = text.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+  if (m && !$("f-title").value) $("f-title").value = m[1].replace(/<[^>]+>/g, "").trim();
+});
+
+$("go").addEventListener("click", async () => {
+  try {
+    const f = $("f-content").files[0];
+    if (!f) return status("Choose a content file first.", "err");
+    const title = $("f-title").value.trim();
+    if (!title) return status("Enter a project title.", "err");
+    const out = ($("f-out").value.trim() || "project.html").replace(/[^\w.\-]/g, "-");
+    const locked = $("f-lock").checked;
+    let content = await f.text();
+    let page;
+
+    if (locked) {
+      const pw = $("f-pw").value;
+      if (pw.length < 8) return status("Use a password of at least 8 characters (a long passphrase is best).", "err");
+      if (pw !== $("f-pw2").value) return status("The two passwords don't match.", "err");
+      if (!window.crypto || !crypto.subtle) return status("This browser can't encrypt from this location. Open the tool in Chrome/Edge/Firefox.", "err");
+      status("Encrypting…");
+      const imgs = [...$("f-imgs").files];
+      const emb = await embedImages(content, imgs);
+      const payload = await encrypt(emb.html, pw);
+      page = buildPage({ title, locked: true, payload });
+      const mb = (page.length / 1048576).toFixed(2);
+      const warn = emb.missing.length ? ` Not embedded (still public files): ${emb.missing.join(", ")}.` : "";
+      status(`Done: ${out} (${mb} MB) downloaded.${warn}`, emb.missing.length ? "" : "ok");
+    } else {
+      page = buildPage({ title, locked: false, content });
+      status(`Done: ${out} downloaded.`, "ok");
+    }
+
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([page], { type: "text/html" }));
+    a.download = out;
+    document.body.appendChild(a); a.click(); a.remove();
+  } catch (e) {
+    status("Something went wrong: " + e.message, "err");
+  }
+});
+</script>
+</body>
+</html>

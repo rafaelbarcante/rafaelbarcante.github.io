@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Let’s Zeppelin — Rafael Barçante</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/project.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <a class="brand" href="../index.html">Rafael Barçante - Game Design Portfolio</a>
+      <nav class="nav" aria-label="Main">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="proj-main">
+    <div class="wrap">
+      <a class="back" href="../index.html#projects">← All projects</a>
+<div id="content">
+<!-- Let’s Zeppelin: content file. Rebuild the page with tools/encrypt.html -->
+<article class="proj">
+
+  <div class="proj-banner">
+    <img src="../assets/images/lets-zeppelin/banner.jpg" alt="Let’s Zeppelin banner" data-size="1920×720">
+  </div>
+
+  <div class="proj-video">
+    <div class="video-slot" data-youtube="r7m0lpmimwA"></div>
+  </div>
+
+  <header class="proj-head">
+    <h1>Let’s Zeppelin</h1>
+    <ul class="proj-facts">
+      <li><span>Studio</span>Gazeus Games</li>
+      <li><span>Role</span>Game Designer</li>
+      <li><span>Platform</span>Android / iOS</li>
+    </ul>
+  </header>
+
+  <div class="proj-text">
+    <section>
+      <h2>Project Overview</h2>
+      <p>A midcore mobile deck-building PvP game, with a twist on the classic Battleship rules. The player builds a fleet of customizable Zeppelins and takes it to battle against other players, collecting resources to craft upgrades, improving their power and climbing the leaderboards.</p>
+      <p>The game is no longer being updated after a change in the company’s strategy, but you can find details of my work below.</p>
+    </section>
+
+    <section>
+      <h2>My Responsibilities</h2>
+      <ul>
+        <li>Together with the lead designer, I conceptualized the entire project, from paper prototypes to a digital version, and created and balanced the skill behaviors.</li>
+        <li>I played a major role in designing the AI behavior.</li>
+        <li>I played a major role in designing the game’s economy and was responsible for balancing it.</li>
+        <li>Together with the lead designer, I ran multiple playtest sessions and prototypes, and interpreted analytics data for decision-making.</li>
+      </ul>
+    </section>
+
+    <section class="results">
+      <h2>Key Results</h2>
+      <ul>
+        <li>Reached top 25% D1 retention in the market in 2019.</li>
+        <li>Solid results for store rating, session time and D28 retention — also in 2019.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Project Highlights</h2>
+      <h3>Economy Design</h3>
+      <p>The game combines IAP and rewarded videos to improve the player’s fleet. Nothing is behind a paywall — purchases only speed up what can be acquired through playing the game.</p>
+      <p>The main focus of the economy is gacha chests with crafting materials. Those materials create parts, and a Zeppelin unit is composed of several parts, offering multiple different strategies when putting a fleet together.</p>
+      <figure class="proj-figure">
+          <img src="../assets/images/lets-zeppelin/flow.png" alt="Let's Zeppelin economy flow" data-size="1094×887" loading="lazy" decoding="async">
+        </figure>
+      <h3>Prototyping</h3>
+      <p>Let’s Zeppelin used extensive paper and digital prototypes until reaching its final design. Prototypes involved many playtest sessions and always sought to prove ideas at the lowest possible cost.</p>
+      <div class="proj-pair">
+        <figure class="proj-figure" style="flex-grow:1.529">
+          <img src="../assets/images/lets-zeppelin/paper-prototypes.jpg" alt="Paper prototypes of the hex grid battlefield" data-size="2500×1635" loading="lazy" decoding="async">
+          <figcaption>Paper prototypes</figcaption>
+        </figure>
+        <figure class="proj-figure" style="flex-grow:0.462">
+          <img src="../assets/images/lets-zeppelin/digital-prototype.png" alt="Early digital prototype" data-size="1125×2436" loading="lazy" decoding="async">
+          <figcaption>Early digital prototype</figcaption>
+        </figure>
+      </div>
+      <h3>Bot Behavior</h3>
+      <p>Let’s Zeppelin is a synchronous multiplayer game. When necessary, we use bots so no one waits too long for a match to start.</p>
+      <p>Those bots mimic player behavior, using randomized timers and a system of “Heat Scores”.</p>
+      <p>As in the classic Battleship game, players need to find and destroy the opponent’s ships (or zeppelins, in our case).</p>
+      <p>Normal shots can hit an enemy unit or miss. When a shot misses, it reveals all cells surrounding the target. Special abilities target multiple cells at once, but don’t reveal additional tiles.</p>
+      <p>So our bot assigns different heat values to each cell, depending on how many cells surround it. Revealing and hitting targets changes those values. It then targets the cells with the highest combined heat.</p>
+      <p>With this system, we created multiple bot “personalities” simply by tweaking values for cell heat and heat preference when using abilities.</p>
+      <figure class="proj-figure">
+          <img src="../assets/images/lets-zeppelin/bot-heat.png" alt="Heat score diagram for the bot" data-size="1580×632" loading="lazy" decoding="async">
+          <figcaption>How the bot assigns heat values to cells</figcaption>
+        </figure>
+    </section>
+  </div>
+
+  <section class="proj-shots">
+    <h2><span>Screenshots</span></h2>
+    <div class="shots-row cols-3">
+      <img src="../assets/images/lets-zeppelin/shot-1.png" alt="Let's Zeppelin screenshot 1" data-size="394×693" loading="lazy" decoding="async">
+      <img src="../assets/images/lets-zeppelin/shot-2.png" alt="Let's Zeppelin screenshot 2" data-size="394×693" loading="lazy" decoding="async">
+      <img src="../assets/images/lets-zeppelin/shot-3.png" alt="Let's Zeppelin screenshot 3" data-size="394×693" loading="lazy" decoding="async">
+    </div>
+    <div class="shots-row cols-4">
+      <img src="../assets/images/lets-zeppelin/shot-4.png" alt="Let's Zeppelin screenshot 4" data-size="600×1200" loading="lazy" decoding="async">
+      <img src="../assets/images/lets-zeppelin/shot-5.png" alt="Let's Zeppelin screenshot 5" data-size="600×1200" loading="lazy" decoding="async">
+      <img src="../assets/images/lets-zeppelin/shot-6.png" alt="Let's Zeppelin screenshot 6" data-size="600×1200" loading="lazy" decoding="async">
+      <img src="../assets/images/lets-zeppelin/shot-7.png" alt="Let's Zeppelin screenshot 7" data-size="600×1200" loading="lazy" decoding="async">
+    </div>
+  </section>
+
+</article>
+
+    </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__copy" style="margin-top:0">© <span id="year"></span> Rafael Barçante</div>
+  </footer>
+
+  <script src="../js/project.js"></script>
+</body>
+</html>

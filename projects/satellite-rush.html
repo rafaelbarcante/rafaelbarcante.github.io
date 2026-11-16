@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Satellite Rush — Rafael Barçante</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/project.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <a class="brand" href="../index.html">Rafael Barçante - Game Design Portfolio</a>
+      <nav class="nav" aria-label="Main">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="proj-main">
+    <div class="wrap">
+      <a class="back" href="../index.html#projects">← All projects</a>
+<div id="content">
+<!-- Satellite Rush: content file. Rebuild the page with tools/encrypt.html -->
+<article class="proj">
+
+  <div class="proj-banner">
+    <img src="../assets/images/satellite-rush/banner.jpg" alt="Satellite Rush banner" data-size="1920×720">
+  </div>
+
+  <div class="proj-video">
+    <div class="video-slot" data-youtube="aL7s3MxTxUM"></div>
+  </div>
+
+  <header class="proj-head">
+    <h1>Satellite Rush</h1>
+    <p class="proj-links">
+      <a class="btn btn--primary" href="https://store.steampowered.com/app/429350/" target="_blank" rel="noopener">Get it here <span class="btn__arrow">↗</span></a>
+    </p>
+    <ul class="proj-facts">
+      <li><span>Studio</span>Kimeric Labs</li>
+      <li><span>Role</span>Game Designer</li>
+      <li><span>Platform</span>PC</li>
+    </ul>
+  </header>
+
+  <div class="proj-text">
+    <section>
+      <h2>Project Overview</h2>
+      <p>Satellite Rush is a Top-Down Shooter with Roguelike elements for PC, Mac and Linux. It was approved on Steam Greenlight and was later published by Plug In Digital. With this project, Kimeric Labs (the studio I cofounded) was selected to join a public incubator run by the State of Rio de Janeiro. The game also participated in Nuuvem’s Super BR Bundle Vol. 2, a collection of 10 quality Brazilian games curated by the largest marketplace in Latin America.</p>
+    </section>
+
+    <section>
+      <h2>My Responsibilities</h2>
+      <ul>
+        <li>Designing, playtesting, iterating and balancing all mechanics together with another Designer.</li>
+        <li>Designing the UX/UI, implementing and animating it in the Unity engine.</li>
+        <li>Owning a large portion of the project management.</li>
+      </ul>
+    </section>
+
+    <section class="results">
+      <h2>Key Results</h2>
+      <ul>
+        <li>Publishing deal with Plug In Digital and local funding from the State of Rio de Janeiro</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Project Details</h2>
+      <p>Below, you may find additional details on my work for both Game Design and UX/UI Design for Satellite Rush.</p>
+    </section>
+  </div>
+
+  <div class="proj-text">
+    <section>
+      <h2>Game Design</h2>
+      <p>Satellite Rush is a very fast-paced game, with a Design built around the fact that you are not an action hero, but a pathetic human being who got abducted and is desperately trying to put up a good show for an alien audience in order to survive.</p>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <img src="../assets/images/satellite-rush/doors.png" alt="The three doors at the start of a run" data-size="1400×244" loading="lazy" decoding="async">
+        </figure>
+      <p>You start the game with three doors in front of you, each leading to a different corridor with a unique boss at the end. Corridors are divided in randomized rooms where you must kill all enemies before moving on to the next one.</p>
+      <p>Below, you will find some of the key Design decisions explained.</p>
+      <h3>Crowd Thrill</h3>
+      <p>The game is about putting up a good show for the audience. Its main feature is the Crowd Thrill meter, shown in the upper part of the screen. This meter is constantly going down, but whenever you kill an enemy it goes up. After reaching a certain threshold, the audience will start throwing items for you.</p>
+      <p>This means the player cannot play in a very safe way, because this won’t make the meter go high enough and they will be stuck with the initial pistol. Also, items disappear after a little while once they are thrown in the arena, so the player must endanger themselves trying to get them.</p>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <video src="../assets/video/satellite-rush/crowd-thrill.mp4" data-loop autoplay loop muted playsinline preload="metadata"></video>
+        </figure>
+      <figure class="proj-figure proj-figure--tall">
+          <img src="../assets/images/satellite-rush/flow.png" alt="Crowd Thrill and item drop rate flow" data-size="872×1129" loading="lazy" decoding="async">
+        </figure>
+      <h3>Adaptability</h3>
+      <p>Another crucial part of the gameplay is making fast decisions based on the resources you have at hand at the time. Weapons have a small amount of ammo, and you can’t choose which one the audience will throw next.</p>
+      <p>So the basic loop in the game mechanic is killing enemies fast, getting a new weapon or utility gadget, adapting your playstyle to what you just got, and keeping the Crowd Thrill high enough for you to immediately get a new item and restart the cycle.</p>
+      <p>This loop gets interrupted from time to time with a refreshing Boss Battle, and beating a boss rewards you with one of three different upgrades — the only time the player is able to pick what they are going to improve.</p>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <video src="../assets/video/satellite-rush/adaptability.mp4" data-loop autoplay loop muted playsinline preload="metadata"></video>
+        </figure>
+      <h3>Progression</h3>
+      <p>While Satellite Rush has permadeath (in the vein of the roguelike genre), the persistent progress comes with unlockables. By trying again and again to beat the game corridors, the player will collect coins. Each corridor has its own coin, and gathering enough of them will automatically unlock a new item.</p>
+      <p>Coins and unlockable items are the only resources that do not get wiped after the player dies, and provide a sense of accomplishment to counter the frustration of permadeath.</p>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <video src="../assets/video/satellite-rush/progression.mp4" data-loop autoplay loop muted playsinline preload="metadata"></video>
+        </figure>
+      <h3>Randomization</h3>
+      <p>Satellite Rush offers different challenges with each play. Corridors are a sequence of rooms, and room layouts have fixed object positions and fixed enemy spawn positions, where an enemy is drawn from a list we attach to that spawn position.</p>
+      <p>Each room layout also has a difficulty level attached to it, so the game checks some variables to determine the player’s performance (health, progression in the corridor, etc.) and picks the next room to fit their difficulty curve.</p>
+      <p>In addition to this, every Boss the player defeats unlocks additional challenges in the remaining corridors (like enemies leaving a fire tile where it died once the player defeats the fire Boss), which greatly multiplies possible situations and makes the order you’ll beat the three corridors a more strategic choice.</p>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <video src="../assets/video/satellite-rush/randomization.mp4" data-loop autoplay loop muted playsinline preload="metadata"></video>
+        </figure>
+    </section>
+
+    <section>
+      <h2>UI/UX</h2>
+      <p>Satellite Rush is a simple game, but some of its features can be a little tricky for the player to grasp. The Crowd Thrill mechanic was, by far, the most iterated element, with the solution of a bar that shines and goes up when an enemy is killed, accompanied by balloons in the audience with the same icon used alongside the bar, being the most effective as playtests showed.</p>
+      <p>Visually, Satellite Rush is a 2D Pixel Art game, so the UI had to blend in with this visual. Not being a pixel artist myself, and given our available resources, I picked a simple flat style that would be populated by pixel art elements to which the attention would be drawn.</p>
+      <p>Below, you’ll find some of the UI elements.</p>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <video src="../assets/video/satellite-rush/ui-upgrade-pickup.mp4" data-loop autoplay loop muted playsinline preload="metadata"></video>
+          <figcaption>Getting an Upgrade</figcaption>
+        </figure>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <video src="../assets/video/satellite-rush/ui-crowd-bar.mp4" data-loop autoplay loop muted playsinline preload="metadata"></video>
+          <figcaption>Crowd Thrill bar</figcaption>
+        </figure>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <video src="../assets/video/satellite-rush/ui-crowd-throw.mp4" data-loop autoplay loop muted playsinline preload="metadata"></video>
+          <figcaption>Crowd throwing an item</figcaption>
+        </figure>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <video src="../assets/video/satellite-rush/progression.mp4" data-loop autoplay loop muted playsinline preload="metadata"></video>
+          <figcaption>Pause/Unlockables Screen</figcaption>
+        </figure>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <video src="../assets/video/satellite-rush/ui-weapon-bars.mp4" data-loop autoplay loop muted playsinline preload="metadata"></video>
+          <figcaption>Getting a Weapon + HP and Ammo bars</figcaption>
+        </figure>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <img src="../assets/images/satellite-rush/ui-main-menu.png" alt="Main menu" data-size="1400×788" loading="lazy" decoding="async">
+          <figcaption>Main Menu</figcaption>
+        </figure>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <img src="../assets/images/satellite-rush/ui-all-elements.png" alt="All in-game UI elements" data-size="1400×788" loading="lazy" decoding="async">
+          <figcaption>All In Game UI elements: Crowd Thrill, Ammo/HP, Coin Counters, Gadget Slot</figcaption>
+        </figure>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <img src="../assets/images/satellite-rush/ui-upgrade-screen.png" alt="Upgrade screen" data-size="1400×788" loading="lazy" decoding="async">
+          <figcaption>Static view of Upgrade Screen</figcaption>
+        </figure>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <img src="../assets/images/satellite-rush/ui-pause-screen.png" alt="Pause and unlockables screen" data-size="1400×788" loading="lazy" decoding="async">
+          <figcaption>Static view of Pause/Unlockables screen</figcaption>
+        </figure>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <img src="../assets/images/satellite-rush/ui-host.png" alt="The Host" data-size="1400×788" loading="lazy" decoding="async">
+          <figcaption>The Host</figcaption>
+        </figure>
+      <figure class="proj-figure proj-figure--native proj-figure--pixel">
+          <img src="../assets/images/satellite-rush/thank-you.png" alt="Thank you" data-size="1400×323" loading="lazy" decoding="async">
+        </figure>
+    </section>
+  </div>
+
+</article>
+
+    </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__copy" style="margin-top:0">© <span id="year"></span> Rafael Barçante</div>
+  </footer>
+
+  <script src="../js/project.js"></script>
+</body>
+</html>
