@@ -35,6 +35,61 @@ function initProject(root) {
     vids.forEach(v => v.play && v.play().catch(() => {}));
   }
 
+  // Protected videos: <div class="video-slot" data-secure="path.bin" data-poster="data:..." data-ratio="16/9" data-size="10.5 MB">
+  // Downloads the encrypted file on click, decrypts it in the browser, then plays it.
+  root.querySelectorAll(".video-slot[data-secure]").forEach(slot => {
+    if (slot.dataset.ratio) slot.style.aspectRatio = slot.dataset.ratio;
+    const poster = slot.dataset.poster || "";
+    slot.innerHTML =
+      (poster ? '<img class="sv__poster" alt="Project video preview" src="' + poster + '">' : "") +
+      '<button type="button" class="sv__play" aria-label="Play video"><span class="sv__icon" aria-hidden="true">▶</span>' +
+      '<span class="sv__label">Play video' + (slot.dataset.size ? " · " + slot.dataset.size : "") + '</span></button>' +
+      '<div class="sv__status" hidden><div class="sv__bar"><span></span></div><p></p></div>';
+    const btn = slot.querySelector(".sv__play");
+    const status = slot.querySelector(".sv__status");
+    const bar = status.querySelector(".sv__bar span");
+    const msg = status.querySelector("p");
+    let busy = false;
+    btn.addEventListener("click", async () => {
+      if (busy) return;
+      busy = true;
+      btn.hidden = true; status.hidden = false; bar.style.width = "0%"; msg.textContent = "Loading video…";
+      try {
+        if (!window.pfDecryptFile) throw new Error("locked");
+        const res = await fetch(slot.dataset.secure);
+        if (!res.ok) throw new Error("http " + res.status);
+        const total = +res.headers.get("Content-Length") || 0;
+        let buf;
+        if (res.body && total) {
+          const reader = res.body.getReader(), parts = []; let got = 0;
+          for (;;) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            parts.push(value); got += value.length;
+            const pct = Math.min(100, Math.round(got / total * 100));
+            bar.style.width = pct + "%"; msg.textContent = "Loading video… " + pct + "%";
+          }
+          buf = new Uint8Array(got); let o = 0; parts.forEach(c => { buf.set(c, o); o += c.length; });
+        } else {
+          buf = new Uint8Array(await res.arrayBuffer());
+        }
+        bar.style.width = "100%"; msg.textContent = "Preparing…";
+        const plain = await window.pfDecryptFile(buf);
+        const v = document.createElement("video");
+        v.controls = true; v.autoplay = true; v.playsInline = true; v.preload = "auto";
+        v.setAttribute("playsinline", "");
+        v.src = URL.createObjectURL(new Blob([plain], { type: "video/mp4" }));
+        slot.textContent = ""; slot.classList.add("is-playing"); slot.appendChild(v);
+        v.play().catch(() => {});
+      } catch (err) {
+        busy = false; btn.hidden = false; status.hidden = true;
+        const local = location.protocol === "file:";
+        alert(local ? "This video needs the site to be served over http(s). Use preview.bat, or open the published site."
+                    : "Couldn't load the video. Please check your connection and try again.");
+      }
+    });
+  });
+
   // YouTube slots: <div class="video-slot" data-youtube="VIDEO_ID">
   root.querySelectorAll(".video-slot[data-youtube]").forEach(slot => {
     const id = (slot.dataset.youtube || "").trim();

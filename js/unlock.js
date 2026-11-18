@@ -20,11 +20,24 @@
     return new TextDecoder().decode(buf);
   }
 
+  // Lets the page decrypt protected media files (format: salt16 | iv12 | AES-GCM ciphertext) with the same password
+  function exposeFileDecryptor(password) {
+    window.pfDecryptFile = async buf => {
+      const u = new Uint8Array(buf);
+      const km = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]);
+      const key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: u.slice(0, 16), iterations: payload.iter, hash: "SHA-256" },
+        km, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      return crypto.subtle.decrypt({ name: "AES-GCM", iv: u.slice(16, 28) }, key, u.slice(28));
+    };
+  }
+
   async function attempt(password, remember) {
     error.hidden = true;
     lock.classList.add("is-busy");
     try {
       const html = await decrypt(password);
+      exposeFileDecryptor(password);
       content.innerHTML = html;
       content.hidden = false;
       lock.hidden = true;
