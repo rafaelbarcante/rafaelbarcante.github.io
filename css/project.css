@@ -195,3 +195,7 @@
 .sv__bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,.3); overflow: hidden; }
 .sv__bar span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .15s; }
 .video-slot.is-playing video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; }
+
+/* Plain video on a project page (with sound, normal controls) */
+.proj-video video { display: block; width: 100%; border-radius: var(--radius); box-shadow: var(--shadow); background: #000; }
+.proj-video--portrait { max-width: 400px; margin-inline: auto; }

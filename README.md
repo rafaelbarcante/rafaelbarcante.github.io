@@ -45,15 +45,15 @@ Use `.jpg`/`.webp` under ~300 KB. YouTube: put the 11-character video ID in `dat
 
 To change a page later: edit its content file and rebuild. Same password again, or a new one.
 
-The six open project pages (`buraco-jogatina`, `fashion-match`, `lets-zeppelin`, `satellite-rush`, `yatzy-party`, `bushido-saga`) are built from the matching files in `private-src/`.
+The eight project pages (`buraco-jogatina`, `fashion-match`, `lets-zeppelin`, `satellite-rush`, `yatzy-party`, `bushido-saga`, `unreleased-cozy-multiplayer`, `unreleased-roguelike`) are all open (no password) and are built from the matching files in `private-src/` (the two Fortis Games pages play their videos from `assets/video/<project>/gameplay.mp4`).
 (`project-1` / `project-2` were demo pages from the first build — safe to delete: `projects/project-1.html`, `projects/project-2.html`, `private-src/project-1.content.html`, `private-src/project-2.content.html`.)
 
 Animated clips are short looping `.mp4` files (in `assets/video/<project>/`) instead of GIFs: ~10× lighter. In a content file use:
 `<video src="../assets/video/<project>/clip.mp4" data-loop autoplay loop muted playsinline preload="metadata"></video>`
 To convert a GIF: `ffmpeg -i in.gif -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2,format=yuv420p" -c:v libx264 -crf 23 -an out.mp4`
-(Videos on locked pages are not encrypted — only images are embedded by the tool.)
 
-## How the lock works (and its limits)
+## How the optional lock works (and its limits)
+(No page is locked right now. The tool still supports it: choose **locked** in `tools/encrypt.html` and set `locked: true` on the card.)
 - Locked pages are AES-256-GCM encrypted in the browser, key derived from the password with PBKDF2 (600k rounds). The published file contains only scrambled data.
 - Anyone with the password can open it and share it. To revoke, rebuild with a new password and republish.
 - Use a long passphrase; short passwords can be guessed offline.

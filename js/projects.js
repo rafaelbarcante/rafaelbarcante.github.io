@@ -35,6 +35,23 @@ window.PROJECTS = [
     locked: false
   },
   {
+    id: "unreleased-cozy-multiplayer",
+    title: "Unreleased Online Multiplayer Cozy Game",
+    studio: "Fortis Games",
+    role: "Senior Game Designer",
+    platform: "Mobile",
+    tags: ["Gameplay", "Monetization", "Data"],
+    metric: ["Led the design of several features of a large-scale online multiplayer game", "Each feature was developed in a rotating pod where I was the designer"],
+    bullets: [
+      { label: "Gameplay Design", text: "Ran several playtest experiments and iterations to refine the core gameplay." },
+      { label: "Monetization", text: "Progression system with deep mechanics, designed around content-treadmill constraints." }
+    ],
+    cover: "assets/images/unreleased-cozy-multiplayer/cover.jpg",      // 1280×548 (21:9)
+    banner: "assets/banners/cozy-game.mp4",
+    detailReady: true,
+    locked: false
+  },
+  {
     id: "satellite-rush",
     title: "Satellite Rush",
     studio: "Kimeric Labs",
@@ -50,21 +67,6 @@ window.PROJECTS = [
     banner: "assets/banners/satellite-rush.mp4",
     detailReady: true,
     locked: false
-  },
-  {
-    id: "undisclosed-cozy-multiplayer",
-    title: "Undisclosed Online Multiplayer Cozy Game",
-    studio: "Undisclosed Studio",
-    role: "Senior Game Designer",
-    platform: "Mobile",
-    tags: ["Gameplay", "Monetization", "Data"],
-    bullets: [
-      { label: "Gameplay Design", text: "Ran several playtest experiments and iterations to refine the core gameplay." },
-      { label: "Monetization", text: "Progression system with deep mechanics, designed around content-treadmill constraints." }
-    ],
-    cover: "assets/images/locked/cover.svg",      // shared "Undisclosed" cover
-    detailReady: true,
-    locked: true
   },
   {
     id: "lets-zeppelin",
@@ -101,19 +103,22 @@ window.PROJECTS = [
     locked: false
   },
   {
-    id: "undisclosed-roguelike",
-    title: "Undisclosed Action Roguelike Brick-breaker",
-    studio: "Undisclosed Studio",
+    id: "unreleased-roguelike",
+    title: "Unreleased Action Roguelike Brick-breaker",
+    studio: "Fortis Games",
     role: "Senior Game Designer",
     platform: "Mobile",
     tags: ["Gameplay", "Monetization", "Data"],
+    metric: ["One of the top-rated prototypes of the studio’s internal incubator", "Strong results in a playtest with real players; next version in development when the studio closed"],
     bullets: [
       { label: "Gameplay Design", text: "A fresh take on a popular genre." },
-      { label: "Monetization", text: "Adapted the progression system of a premium reference title to the F2P market." }
+      { label: "Monetization", text: "Adapted the progression system of a premium reference title to the F2P market." },
+      { label: "Agentic AI Development", text: "Designed and implemented major systems using AI." }
     ],
-    cover: "assets/images/locked/cover.svg",      // shared "Undisclosed" cover
+    cover: "assets/images/unreleased-roguelike/cover.jpg",      // 1280×548 (21:9)
+    banner: "assets/banners/brick-breaker.mp4",
     detailReady: true,
-    locked: true
+    locked: false
   },
   {
     id: "yatzy-party",
